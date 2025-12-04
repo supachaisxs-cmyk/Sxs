@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Mountain 2025 — Showtime Selector</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff4da6, #6a00ff);
+        margin: 0;
+        padding: 20px;
+        color: #fff;
+        text-align: center;
+    }
+    h1 { margin-bottom: 10px; }
+    select {
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+    }
+    .stage {
+        background: rgba(255,255,255,0.15);
+        margin: 15px auto;
+        padding: 15px;
+        width: 90%;
+        border-radius: 15px;
+    }
+    .band {
+        background: rgba(0,0,0,0.3);
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .band:hover { background: rgba(0,0,0,0.5); }
+    .selected {
+        background: #00eaff !important;
+        color: #000;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>🎵 Big Mountain 2025 — Showtime Selector</h1>
+
+<select id="daySelector">
+    <option value="day6">วันที่ 6 ธ.ค.</option>
+    <option value="day7">วันที่ 7 ธ.ค.</option>
+</select>
+
+<div id="showArea"></div>
+
+<script>
+const data = {
+    day6: {
+        "ม่อนทอง": [
+            { time: "18:00", band: "Tilly Birds" },
+            { time: "19:30", band: "Three Man Down" },
+            { time: "21:00", band: "Cocktail" }
+        ],
+        "ม่วนซื่น": [
+            { time: "18:00", band: "SRN" },
+            { time: "19:00", band: "Yes Indeed" },
+            { time: "20:30", band: "Paper Planes" }
+        ]
+    },
+    day7: {
+        "ม่อนทอง": [
+            { time: "18:00", band: "Violette Wautier" },
+            { time: "19:30", band: "The Toys" },
+            { time: "21:00", band: "Bodyslam" }
+        ],
+        "ม่วนซื่น": [
+            { time: "18:00", band: "BKN" },
+            { time: "19:00", band: "Loserpop" },
+            { time: "20:30", band: "F.HERO" }
+        ]
+    }
+};
+
+
+// โหลดตามวันที่
+function renderShows(day) {
+    let html = "";
+    const stages = data[day];
+
+    for (let stage in stages) {
+        html += `<div class='stage'><h2>${stage}</h2>`;
+
+        stages[stage].forEach((item, i) => {
+            html += `
+                <div class='band' onclick="selectBand(this)">
+                    ${item.time} — ${item.band}
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+    }
+
+    document.getElementById("showArea").innerHTML = html;
+}
+
+function selectBand(el) {
+    el.classList.toggle("selected");
+}
+
+document.getElementById("daySelector").addEventListener("change", e => {
+    renderShows(e.target.value);
+});
+
+// โหลดครั้งแรกวันที่ 6
+renderShows("day6");
+</script>
+
+</body>
+</html>
